@@ -111,8 +111,6 @@ a {
 }
 .site-header {
   height: 56px;
-  max-width: 1344px;
-  margin: auto;
   padding: 0 60px;
   display: flex;
   align-items: center;
@@ -214,7 +212,6 @@ a {
 .home-main {
   max-width: 1224px;
   margin: auto;
-  width: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -1186,7 +1183,6 @@ dialog h2 {
 
 /* Comfortable touch layouts in both iPad orientations. */
 @media (min-width: 1500px) {
-  .site-header,
   .game-main {
     max-width: 1440px;
   }
@@ -1200,8 +1196,7 @@ dialog h2 {
 }
 @media (max-width: 1320px) {
   .site-header {
-    margin: 0 40px;
-    padding: 0 0;
+    padding: 0 40px;
   }
   .home-main,
   .home-footer {
@@ -1240,7 +1235,7 @@ dialog h2 {
 @media (max-width: 1100px) {
   .site-header {
     height: 54px;
-    margin: 0 32px;
+    padding: 0 32px;
   }
   .home-main,
   .home-footer {
@@ -1385,7 +1380,7 @@ dialog h2 {
 @media (max-width: 650px) {
   .site-header {
     height: 48px;
-    margin: 0 23px;
+    padding: 0 23px;
   }
   .brand {
     gap: 11px;
@@ -1743,6 +1738,13 @@ dialog h2 {
     font-size: 10px;
   }
 }
+@media (max-width: 430px) {
+  .home-actions .button {
+    font-size: 13px;
+    padding: 16px 15px;
+    gap: 10px;
+  }
+}
 @media (max-width: 370px) {
   .home-main,
   .home-footer {
@@ -1798,7 +1800,7 @@ dialog h2 {
     font-size: 8px;
   }
   .site-header {
-    margin: 0 19px;
+    padding: 0 19px;
   }
   .site-header nav {
     gap: 14px;
