@@ -70,7 +70,7 @@ function header(isGame = false) {
   return `<header class="site-header">
     <button class="brand" data-action="home" aria-label="Qui est-ce ? — Accueil">
       <span class="brand-mark" aria-hidden="true"><span>?</span></span>
-      <span class="brand-type">Qui est-ce <span class="brand-question">?</span><small>LE JEU DES OBJETS</small></span>
+      <span class="brand-type">Qui est-ce <span class="brand-question">?</span></span>
     </button>
     <nav aria-label="Navigation principale">
       ${isGame ? '<button class="text-button home-link" data-action="home">' + icon("back") + "<span>Accueil</span></button>" : '<span class="language-tag"><span class="french-flag" aria-hidden="true"></span> En français</span>'}
@@ -109,14 +109,6 @@ function renderHome() {
           <span class="hand-note">À toi de le découvrir <svg viewBox="0 0 74 48" fill="none"><path d="M2 3C10 35 42 42 68 20m-19 2 20-3-3 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </div>
       </section>
-      <section class="how-it-works" aria-labelledby="how-title">
-        <div class="section-label"><span class="line"></span><h2 id="how-title">LE PRINCIPE ? C’EST TOUT SIMPLE.</h2><span class="line"></span></div>
-        <div class="steps">
-          <article class="step"><span class="step-number step-blue">01</span><div><h3>Garde ton secret</h3><p>Chacun reçoit un objet au hasard.<br />Ne le montre pas à ton partenaire !</p></div></article>
-          <article class="step"><span class="step-number step-coral">02</span><div><h3>À vous les questions</h3><p>« C’est bleu ? », « C’est grand ? »…<br />On répond seulement par oui ou non.</p></div></article>
-          <article class="step"><span class="step-number step-green">03</span><div><h3>Trouve le bon objet</h3><p>Touche les cartes pour les éliminer.<br />Le dernier objet, c’est le secret !</p></div></article>
-        </div>
-      </section>
     </main>
     <footer class="home-footer"><span>Un peu de français, beaucoup de curiosité.</span><span>Fait pour jouer ensemble <span class="footer-flower" aria-hidden="true">✳</span></span></footer>`;
 }
@@ -149,7 +141,6 @@ function renderGame() {
           <button class="text-button new-round" data-action="new">${icon("reset")} Nouvelle partie</button>
         </aside>
       </div>
-      <div class="game-footer"><span>${icon("chat")} Écoute bien les réponses de ton partenaire !</span></div>
     </main>`;
   renderSecret();
   updateBoard();

@@ -38,6 +38,11 @@ body {
   min-width: 320px;
   -webkit-text-size-adjust: 100%;
 }
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
 button,
 a {
   -webkit-tap-highlight-color: transparent;
@@ -105,7 +110,7 @@ a {
   outline: none;
 }
 .site-header {
-  height: 76px;
+  height: 58px;
   max-width: 1344px;
   margin: auto;
   padding: 0 60px;
@@ -117,7 +122,7 @@ a {
 .brand {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 11px;
   padding: 0;
   background: none;
   text-align: left;
@@ -126,8 +131,8 @@ a {
   position: relative;
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 41px;
+  width: 29px;
+  height: 35px;
   border-radius: 7px;
   background: #d9dfef;
   transform: rotate(-11deg);
@@ -143,25 +148,16 @@ a {
 .brand-mark span {
   z-index: 1;
   transform: rotate(11deg);
-  font: 600 32px/1 var(--serif);
+  font: 600 27px/1 var(--serif);
   color: white;
   margin-top: -2px;
 }
 .brand-type {
-  font: 600 24px/1 var(--serif);
+  font: 600 21px/1 var(--serif);
   letter-spacing: -1px;
 }
 .brand-question {
   color: var(--coral);
-}
-.brand-type small {
-  display: block;
-  font:
-    600 8px/1.5 "DM Sans",
-    sans-serif;
-  letter-spacing: 2.1px;
-  margin-top: 4px;
-  color: #77766f;
 }
 .site-header nav {
   display: flex;
@@ -218,13 +214,18 @@ a {
 .home-main {
   max-width: 1224px;
   margin: auto;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .hero {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
-  padding: 34px 0 26px;
+  gap: 22px;
+  padding: 52px 0 56px;
 }
 .hero-copy {
   width: 100%;
@@ -233,7 +234,22 @@ a {
 .home-actions {
   display: flex;
   justify-content: center;
-  gap: 13px;
+  gap: 16px;
+}
+.home-actions .button {
+  min-height: 66px;
+  padding: 20px 34px;
+  font-size: 17px;
+  letter-spacing: -0.2px;
+  border-radius: 13px;
+}
+.home-actions .button-primary .icon {
+  width: 22px;
+  height: 22px;
+}
+.home-actions .button-secondary .icon {
+  width: 19px;
+  height: 19px;
 }
 .button {
   min-height: 52px;
@@ -260,23 +276,26 @@ a {
 .button-primary {
   background: var(--blue);
   color: #fff;
-  box-shadow: 0 4px 0 #1d329318;
+  box-shadow: 0 6px 0 #1d329326;
 }
 .button-primary:hover {
   background: var(--blue-dark);
-  box-shadow: 0 6px 15px #314dbc20;
+  box-shadow: 0 10px 22px #314dbc33;
 }
 .button-primary .icon {
   width: 19px;
   height: 19px;
 }
 .button-secondary {
-  background: transparent;
-  border: 1px solid #d3d3ca;
-  color: #5a5d57;
+  background: #fffdf7;
+  border: 2px solid #c9c9be;
+  color: #3f4139;
+  box-shadow: 0 6px 0 #4b4c3f12;
 }
 .button-secondary:hover:not(:disabled) {
-  background: #eeede7;
+  background: #f2f1e8;
+  border-color: #b5b5a8;
+  box-shadow: 0 10px 22px #4b4c3f1f;
 }
 .button-secondary:disabled {
   color: #77796f;
@@ -479,71 +498,6 @@ a {
   margin-left: 8px;
   transform: rotate(-18deg);
   margin-top: -18px;
-}
-.how-it-works {
-  padding: 19px 0 47px;
-}
-.section-label {
-  display: flex;
-  gap: 22px;
-  align-items: center;
-  justify-content: center;
-}
-.section-label h2 {
-  font:
-    600 9px/1.5 "DM Sans",
-    sans-serif;
-  letter-spacing: 1.85px;
-  color: #828276;
-  white-space: nowrap;
-}
-.line {
-  height: 1px;
-  background: var(--line);
-  flex: 1;
-}
-.steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 38px;
-  padding-top: 37px;
-}
-.step {
-  display: flex;
-  gap: 18px;
-  align-items: flex-start;
-}
-.step-number {
-  font: 600 15px/1 var(--serif);
-  width: 43px;
-  height: 43px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  flex: none;
-  transform: rotate(-8deg);
-}
-.step-blue {
-  background: #e7eaf3;
-  color: var(--blue);
-}
-.step-coral {
-  background: #f3e7dd;
-  color: #bd684e;
-}
-.step-green {
-  background: #e7ecdf;
-  color: #65805b;
-}
-.step h3 {
-  font-size: 13px;
-  font-weight: 600;
-  margin: 2px 0 8px;
-}
-.step p {
-  font-size: 11px;
-  line-height: 1.85;
-  color: #7a7a71;
 }
 .home-footer {
   border-top: 1px solid var(--line);
@@ -1006,26 +960,6 @@ a {
   width: 13px;
   height: 13px;
 }
-.game-footer {
-  border-top: 1px solid var(--line);
-  margin-top: 17px;
-  padding-top: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 9px;
-  color: #8b8d7d;
-  gap: 20px;
-}
-.game-footer > span:first-child {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-.game-footer .icon {
-  width: 14px;
-  height: 14px;
-}
 
 /* Dialogs and feedback */
 dialog {
@@ -1305,30 +1239,13 @@ dialog h2 {
 }
 @media (max-width: 1100px) {
   .site-header {
-    height: 68px;
+    height: 54px;
     margin: 0 32px;
   }
   .home-main,
   .home-footer {
     margin-left: 32px;
     margin-right: 32px;
-  }
-  .steps {
-    gap: 23px;
-  }
-  .step {
-    gap: 12px;
-  }
-  .step h3 {
-    font-size: 12px;
-  }
-  .step p {
-    font-size: 10px;
-  }
-  .step-number {
-    width: 35px;
-    height: 35px;
-    font-size: 13px;
   }
   .game-main {
     padding: 20px 32px 20px;
@@ -1395,30 +1312,11 @@ dialog h2 {
   .questions-panel .text-button {
     font-size: 9px;
   }
-  .game-footer {
-    font-size: 8px;
-  }
   .brand-type {
-    font-size: 22px;
+    font-size: 20px;
   }
 }
 @media (max-width: 850px) {
-  .how-it-works {
-    padding-bottom: 32px;
-  }
-  .steps {
-    gap: 18px;
-  }
-  .step {
-    flex-direction: column;
-    gap: 12px;
-  }
-  .step p {
-    font-size: 10px;
-  }
-  .step h3 {
-    font-size: 12px;
-  }
   .home-footer {
     font-size: 9px;
   }
@@ -1486,26 +1384,21 @@ dialog h2 {
 }
 @media (max-width: 650px) {
   .site-header {
-    height: 60px;
+    height: 52px;
     margin: 0 23px;
   }
   .brand {
     gap: 11px;
   }
   .brand-type {
-    font-size: 20px;
-  }
-  .brand-type small {
-    font-size: 7px;
-    letter-spacing: 1.8px;
-    margin-top: 3px;
+    font-size: 19px;
   }
   .brand-mark {
-    width: 28px;
-    height: 34px;
+    width: 26px;
+    height: 31px;
   }
   .brand-mark span {
-    font-size: 26px;
+    font-size: 24px;
   }
   .site-header nav {
     gap: 18px;
@@ -1537,13 +1430,13 @@ dialog h2 {
     text-align: center;
   }
   .home-actions {
-    gap: 11px;
+    gap: 12px;
   }
   .home-actions .button {
-    font-size: 12px;
-    padding: 15px 18px;
-    gap: 14px;
-    min-height: 51px;
+    font-size: 15px;
+    padding: 18px 22px;
+    gap: 12px;
+    min-height: 60px;
   }
   .hero-visual {
     width: 100%;
@@ -1598,38 +1491,6 @@ dialog h2 {
     width: 312px;
     height: 312px;
     top: 50%;
-  }
-  .how-it-works {
-    padding: 28px 0;
-  }
-  .section-label {
-    gap: 12px;
-  }
-  .section-label h2 {
-    font-size: 7px;
-    letter-spacing: 1.2px;
-  }
-  .steps {
-    grid-template-columns: 1fr;
-    gap: 25px;
-    padding-top: 27px;
-    max-width: 330px;
-    margin: auto;
-  }
-  .step {
-    flex-direction: row;
-    gap: 17px;
-  }
-  .step-number {
-    width: 39px;
-    height: 39px;
-    font-size: 14px;
-  }
-  .step h3 {
-    font-size: 13px;
-  }
-  .step p {
-    font-size: 11px;
   }
   .home-footer {
     flex-direction: column;
@@ -1831,15 +1692,6 @@ dialog h2 {
     margin-top: 10px;
     font-size: 9px;
   }
-  .game-footer {
-    font-size: 8px;
-    line-height: 1.7;
-    flex-direction: column;
-    gap: 6px;
-    text-align: center;
-    padding: 16px 0 0;
-    margin-top: 12px;
-  }
   .board-note > span {
     font-size: 28px;
   }
@@ -1898,9 +1750,9 @@ dialog h2 {
     margin-right: 19px;
   }
   .home-actions .button {
-    font-size: 11px;
-    padding: 14px 13px;
-    gap: 8px;
+    font-size: 13px;
+    padding: 16px 15px;
+    gap: 9px;
   }
   .hero-visual {
     height: 340px;
