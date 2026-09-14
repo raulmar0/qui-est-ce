@@ -43,3 +43,22 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # Le portail sert aussi ce jeu, sous isadoragazzi.com/quiestce : il le
+  # recompile depuis ce dépôt à chaque publication. On le prévient ici. Sans
+  # le jeton PORTAIL_TOKEN, l'étape passe son tour et le portail se mettra à
+  # jour à sa prochaine publication à lui.
+  portail:
+    needs: deploy
+    runs-on: ubuntu-latest
+    env:
+      JETON: ${{ secrets.PORTAIL_TOKEN }}
+    steps:
+      - name: Prévenir le portail
+        if: env.JETON != ''
+        run: |
+          curl -fsS -X POST \
+            -H "Authorization: Bearer $JETON" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/raulmar0/isadora/dispatches \
+            -d '{"event_type":"jeu-mis-a-jour"}'

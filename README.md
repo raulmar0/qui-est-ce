@@ -2,7 +2,7 @@
 
 Un jeu de devinettes en français, pensé pour jouer à deux en classe, chacun sur son iPad.
 
-**Jouer : https://raulmar0.github.io/qui-est-ce/**
+**Jouer : https://isadoragazzi.com/quiestce/**
 
 Chaque élève lance une nouvelle partie : les 23 objets sont mélangés et une carte secrète est tirée indépendamment au hasard. Les élèves se posent des questions à l’oral et touchent les cartes pour éliminer des possibilités. « J’ai une idée ! » aide à formuler une proposition ; c’est le partenaire qui confirme la réponse.
 
@@ -37,6 +37,20 @@ Application statique en HTML, CSS et JavaScript, construite avec Vite. Les image
 ## Publication
 
 Dans les paramètres du dépôt, configurer GitHub Pages avec **GitHub Actions** comme source. Chaque push sur `main` exécute les tests unitaires, les parcours navigateur Chromium et WebKit puis publie `dist/`. Voir la [documentation GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+
+Le jeu est en ligne à deux adresses. Celle qu'on donne en classe,
+`isadoragazzi.com/quiestce/`, est servie par le portail
+[raulmar0/isadora](https://github.com/raulmar0/isadora) : son workflow
+récupère ce dépôt, le compile et pose `dist/` dans `site/quiestce/`. L'autre,
+`raulmar0.github.io/qui-est-ce/`, reste publiée par ce dépôt-ci.
+
+Le travail se fait ici, dans les deux cas. Pour que le portail se recompile
+dès qu'on publie le jeu, lui déposer un jeton : un PAT à portée fine, droit
+**Contents : read and write** sur `raulmar0/isadora`, rangé dans les secrets
+de ce dépôt sous `PORTAIL_TOKEN`. Sans ce secret, l'étape « Prévenir le
+portail » passe son tour sans faire échouer la publication, et le portail
+reprend le jeu à jour à sa prochaine mise en ligne — ou tout de suite avec
+`gh workflow run deploy.yml -R raulmar0/isadora`.
 
 ## Images et polices
 
