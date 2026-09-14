@@ -110,7 +110,7 @@ a {
   outline: none;
 }
 .site-header {
-  height: 58px;
+  height: 56px;
   max-width: 1344px;
   margin: auto;
   padding: 0 60px;
@@ -122,7 +122,7 @@ a {
 .brand {
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 14px;
   padding: 0;
   background: none;
   text-align: left;
@@ -131,8 +131,8 @@ a {
   position: relative;
   display: grid;
   place-items: center;
-  width: 29px;
-  height: 35px;
+  width: 34px;
+  height: 41px;
   border-radius: 7px;
   background: #d9dfef;
   transform: rotate(-11deg);
@@ -148,12 +148,12 @@ a {
 .brand-mark span {
   z-index: 1;
   transform: rotate(11deg);
-  font: 600 27px/1 var(--serif);
+  font: 600 32px/1 var(--serif);
   color: white;
   margin-top: -2px;
 }
 .brand-type {
-  font: 600 21px/1 var(--serif);
+  font: 600 24px/1 var(--serif);
   letter-spacing: -1px;
 }
 .brand-question {
@@ -1313,7 +1313,7 @@ dialog h2 {
     font-size: 9px;
   }
   .brand-type {
-    font-size: 20px;
+    font-size: 22px;
   }
 }
 @media (max-width: 850px) {
@@ -1384,21 +1384,21 @@ dialog h2 {
 }
 @media (max-width: 650px) {
   .site-header {
-    height: 52px;
+    height: 48px;
     margin: 0 23px;
   }
   .brand {
     gap: 11px;
   }
   .brand-type {
-    font-size: 19px;
+    font-size: 20px;
   }
   .brand-mark {
-    width: 26px;
-    height: 31px;
+    width: 28px;
+    height: 34px;
   }
   .brand-mark span {
-    font-size: 24px;
+    font-size: 26px;
   }
   .site-header nav {
     gap: 18px;
