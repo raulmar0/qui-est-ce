@@ -4,13 +4,13 @@ Un jeu de devinettes en français, pensé pour jouer à deux en classe, chacun s
 
 **Jouer : https://isadoragazzi.com/quiestce/**
 
-Chaque élève lance une nouvelle partie : les 23 objets sont mélangés et une carte secrète est tirée indépendamment au hasard. Les élèves se posent des questions à l’oral et touchent les cartes pour éliminer des possibilités. « J’ai une idée ! » aide à formuler une proposition ; c’est le partenaire qui confirme la réponse.
+Chaque élève lance une nouvelle partie : les 23 objets sont mélangés et une carte secrète est tirée indépendamment au hasard. Les élèves se posent des questions à l’oral — « C’est bleu ? », « C’est un meuble ? » — et touchent les cartes pour éliminer des possibilités. Quand il ne reste qu’un objet, le plateau propose la question à poser : « C’est le vélo ? », « Ce sont les ciseaux ? ». C’est le partenaire qui confirme.
 
 - Interface et vocabulaire en français, illustrations originales créées avec Image Gen.
 - Nouvelle partie, continuation, annulation et remise à zéro du plateau.
 - Sauvegarde automatique du plateau, de la carte secrète et des objets éliminés dans le navigateur.
 - Carte secrète cachée au départ, masquée après 12 secondes et quand on quitte l’onglet.
-- Aide, exemples de questions, gestion du singulier et du pluriel.
+- Aide et exemples de questions autour de « c’est » et « ce sont », au singulier comme au pluriel.
 - Mise en page adaptée à l’iPad en portrait et paysage, et aux téléphones.
 - Aucune inscription, aucun serveur de jeu et aucun suivi publicitaire. Les appareils ne sont pas connectés entre eux : on joue en se parlant.
 

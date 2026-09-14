@@ -36,5 +36,5 @@ export const ITEM_BY_ID = Object.fromEntries(
 export const ITEM_IDS = ITEMS.map((item) => item.id);
 
 export function questionFor(item) {
-  return `Est-ce que ${item.plural ? "ce sont" : "c’est"} ${item.name.toLocaleLowerCase("fr")} ?`;
+  return `${item.plural ? "Ce sont" : "C’est"} ${item.name.toLocaleLowerCase("fr")} ?`;
 }

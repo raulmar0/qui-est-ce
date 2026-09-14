@@ -42,8 +42,6 @@ const paths = {
   close: '<path d="m6 6 12 12M6 18 18 6"/>',
   check: '<path d="m5 12 4 4L19 6"/>',
   chat: '<path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l-2 2v-9.5A8.5 8.5 0 0 1 10.5 4h2A8.5 8.5 0 0 1 21 11.5Z"/><path d="M7 10h9M7 14h6"/>',
-  users:
-    '<circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M16 4a3 3 0 0 1 0 6m2 5a5 5 0 0 1 3 4v2"/>',
   cards:
     '<rect x="7" y="4" width="13" height="17" rx="3"/><path d="M4 18 2 6a3 3 0 0 1 2-3l9-1"/>',
   spark:
@@ -89,26 +87,21 @@ function homeCard(id, className) {
 function renderHome() {
   screen = "home";
   hideSecret();
-  const remaining = game ? ITEMS.length - game.eliminated.length : 0;
   app.innerHTML = `${header()}
     <main id="main" class="home-main" tabindex="-1">
-      <section class="hero" aria-labelledby="home-title">
+      <h1 class="sr-only">Qui est-ce ? — Le jeu des objets</h1>
+      <section class="hero">
         <div class="hero-copy">
-          <div class="eyebrow"><span class="little-star" aria-hidden="true">✳</span> UN JEU À DEUX, EN FRANÇAIS</div>
-          <h1 id="home-title">Un objet secret.<br /><em>À toi de jouer.</em></h1>
-          <p class="hero-description">Pose les bonnes questions, élimine les objets<br class="desktop-break" /> et découvre le secret de ton partenaire !</p>
           <div class="home-actions">
             <button class="button button-primary" data-action="new">Nouvelle partie ${icon("arrow")}</button>
             <button class="button button-secondary" data-action="continue" ${game ? "" : "disabled"}>${icon("play")} Continuer</button>
           </div>
-          <p class="save-hint">${game ? icon("check") + ` Une partie t’attend · ${remaining} objet${remaining === 1 ? "" : "s"} restant${remaining === 1 ? "" : "s"}` : icon("lock") + " Ta partie se garde ici, pour la prochaine fois."}</p>
           ${storageAvailable ? "" : '<p class="storage-warning">La sauvegarde est indisponible dans ce navigateur. Garde cet onglet ouvert pour continuer ta partie.</p>'}
-          <div class="hero-meta"><span>${icon("cards")} 23 objets</span><span>${icon("users")} 2 joueurs</span><span>${icon("chat")} 100 % français</span></div>
         </div>
         <div class="hero-visual" aria-hidden="true">
           <div class="visual-orbit"></div>
           <span class="doodle doodle-one">✳</span><span class="doodle doodle-two">✦</span>
-          <div class="speech-bubble">Est-ce que ça roule ?<span>Oui !</span></div>
+          <div class="speech-bubble">C’est grand ?<span>Oui !</span></div>
           ${homeCard("velo", "demo-bicycle")}
           ${homeCard("sac-a-dos", "demo-backpack")}
           ${homeCard("lunettes", "demo-glasses")}
@@ -120,8 +113,8 @@ function renderHome() {
         <div class="section-label"><span class="line"></span><h2 id="how-title">LE PRINCIPE ? C’EST TOUT SIMPLE.</h2><span class="line"></span></div>
         <div class="steps">
           <article class="step"><span class="step-number step-blue">01</span><div><h3>Garde ton secret</h3><p>Chacun reçoit un objet au hasard.<br />Ne le montre pas à ton partenaire !</p></div></article>
-          <article class="step"><span class="step-number step-coral">02</span><div><h3>À vous les questions</h3><p>Posez une question à tour de rôle.<br />On répond seulement par oui ou non.</p></div></article>
-          <article class="step"><span class="step-number step-green">03</span><div><h3>Trouve le bon objet</h3><p>Touche les cartes pour les éliminer.<br />Un dernier objet ? Fais ta proposition !</p></div></article>
+          <article class="step"><span class="step-number step-coral">02</span><div><h3>À vous les questions</h3><p>« C’est bleu ? », « C’est grand ? »…<br />On répond seulement par oui ou non.</p></div></article>
+          <article class="step"><span class="step-number step-green">03</span><div><h3>Trouve le bon objet</h3><p>Touche les cartes pour les éliminer.<br />Le dernier objet, c’est le secret !</p></div></article>
         </div>
       </section>
     </main>
@@ -131,7 +124,7 @@ function renderHome() {
 function boardCard(id) {
   const item = ITEM_BY_ID[id];
   const eliminated = game.eliminated.includes(id);
-  return `<button class="object-card ${eliminated ? "is-eliminated" : ""}" data-object="${id}" aria-label="${item.name}" aria-pressed="${eliminated}" aria-describedby="board-instruction">
+  return `<button class="object-card ${eliminated ? "is-eliminated" : ""}" data-object="${id}" aria-label="${item.name}" aria-pressed="${eliminated}">
     <span class="card-illustration">${artwork(item)}<span class="cross-mark" aria-hidden="true"></span></span>
     <span class="object-name">${item.name}</span><span class="card-status" aria-hidden="true">${eliminated ? "Éliminé" : "Éliminer"}</span>
   </button>`;
@@ -142,7 +135,8 @@ function renderGame() {
   screen = "game";
   app.innerHTML = `${header(true)}
     <main id="main" class="game-main" tabindex="-1">
-      <div class="game-heading"><div><div class="eyebrow">OBSERVE. QUESTIONNE. DEVINE.</div><h1>À toi de mener l’enquête<span class="heading-dot">.</span></h1><p id="board-instruction">Touche un objet pour l’éliminer. Touche-le à nouveau pour le rétablir.</p></div><span id="saved-status" class="saved-status"></span></div>
+      <h1 class="sr-only">Qui est-ce ? — Ma partie</h1>
+      <p id="saved-status" class="storage-warning game-warning" hidden></p>
       <div class="play-layout">
         <section class="board-section" aria-labelledby="board-title">
           <div class="board-toolbar"><div class="board-title-wrap"><h2 id="board-title">Mon plateau</h2><span id="remaining" class="count-badge" aria-live="polite"></span></div><div class="board-tools"><button class="text-button" data-action="undo" title="Annuler la dernière action">${icon("undo")}<span>Annuler</span></button><button class="icon-button" data-action="reset" aria-label="Rétablir tous les objets" title="Rétablir tous les objets">${icon("reset")}</button></div></div>
@@ -151,12 +145,11 @@ function renderGame() {
         </section>
         <aside class="game-sidebar" aria-label="Ma carte et mes questions">
           <section class="secret-panel" aria-labelledby="secret-title"><div class="panel-eyebrow">${icon("lock")} RIEN QUE POUR TOI</div><h2 id="secret-title">Ma carte secrète</h2><p>Ton partenaire doit la deviner.</p><div id="secret-slot"></div><p class="secret-caption">Un petit coup d’œil, puis on la cache !</p></section>
-          <section class="questions-panel"><span class="question-icon">${icon("chat")}</span><h2>Un peu d’inspiration ?</h2><p>« Est-ce que ça roule ? »</p><p>« Est-ce qu’on l’utilise en classe ? »</p><p>« Est-ce que c’est électronique ? »</p><button class="text-button" data-action="questions">D’autres questions ${icon("arrow")}</button></section>
-          <button class="button guess-button" data-action="guess">${icon("spark")} J’ai une idée !</button>
+          <section class="questions-panel"><span class="question-icon">${icon("chat")}</span><h2>Un peu d’inspiration ?</h2><p>« C’est bleu ? »</p><p>« C’est grand ? »</p><p>« C’est une fourniture scolaire ? »</p><button class="text-button" data-action="questions">D’autres questions ${icon("arrow")}</button></section>
           <button class="text-button new-round" data-action="new">${icon("reset")} Nouvelle partie</button>
         </aside>
       </div>
-      <div class="game-footer"><span>${icon("users")} Chacun son iPad, chacun son secret.</span><span>Écoute bien les réponses de ton partenaire !</span></div>
+      <div class="game-footer"><span>${icon("chat")} Écoute bien les réponses de ton partenaire !</span></div>
     </main>`;
   renderSecret();
   updateBoard();
@@ -172,12 +165,11 @@ function save() {
 
 function updateSaveStatus() {
   const status = document.querySelector("#saved-status");
-  if (status) {
-    status.classList.toggle("save-unavailable", !storageAvailable);
-    status.innerHTML = storageAvailable
-      ? icon("check") + " Partie sauvegardée"
-      : "Sauvegarde indisponible : garde cet onglet ouvert";
-  }
+  if (!status) return;
+  status.hidden = storageAvailable;
+  status.textContent = storageAvailable
+    ? ""
+    : "Sauvegarde indisponible : garde cet onglet ouvert.";
 }
 
 function updateBoard() {
@@ -197,16 +189,15 @@ function updateBoard() {
     !game.history.length;
   document.querySelector('[data-action="reset"]').disabled =
     !game.eliminated.length;
-  document.querySelector(".guess-button").disabled = !remaining.length;
   const message = document.querySelector("#board-message");
   if (remaining.length === 0) {
     message.innerHTML = `${icon("help")}<p>Plus d’objets ? Une réponse t’a peut-être échappé. Rétablis une carte ou <button class="inline-button" data-action="reset">recommence le plateau</button>.</p>`;
     message.className = "board-message is-warning";
   } else if (remaining.length === 1) {
-    message.innerHTML = `${icon("spark")}<p>Il ne reste qu’un objet ! <button class="inline-button" data-action="guess">Fais ta proposition.</button></p>`;
+    message.innerHTML = `${icon("spark")}<p>Il ne reste qu’un objet ! Demande à ton partenaire : <strong>« ${questionFor(ITEM_BY_ID[remaining[0]])} »</strong></p>`;
     message.className = "board-message is-ready";
   } else {
-    message.innerHTML = `${icon("chat")}<p>À tour de rôle, posez une question. La réponse : <strong>oui</strong> ou <strong>non</strong> !</p>`;
+    message.innerHTML = `${icon("chat")}<p>À tour de rôle, posez une question : <strong>« C’est… ? »</strong> La réponse : <strong>oui</strong> ou <strong>non</strong> !</p>`;
     message.className = "board-message";
   }
   updateSaveStatus();
@@ -279,37 +270,14 @@ function closeDialog() {
 
 function showRules() {
   openDialog(
-    `<span class="dialog-kicker">À DEUX, C’EST MIEUX</span><h2 id="dialog-title">Comment jouer ?</h2><p class="dialog-intro">Installe-toi face à ton partenaire. Chacun ouvre le jeu sur son iPad et lance une nouvelle partie.</p><ol class="rules-list"><li><span>01</span><div><h3>Découvre ta carte secrète</h3><p>Un objet est tiré au hasard pour toi. Regarde-le, puis cache-le : ton partenaire doit le deviner.</p></div></li><li><span>02</span><div><h3>Pose une question en français</h3><p>À tour de rôle, posez une question sur l’objet de l’autre. Répondez seulement par « oui » ou « non ».</p></div></li><li><span>03</span><div><h3>Élimine les objets</h3><p>Sur ton plateau, touche les objets qui ne correspondent pas à la réponse. Une erreur ? Touche encore la carte pour la rétablir.</p></div></li><li><span>04</span><div><h3>Fais ta proposition !</h3><p>Tu penses avoir trouvé ? Appuie sur « J’ai une idée ! » et demande à ton partenaire de confirmer.</p></div></li></ol><div class="dialog-note">${icon("cards")} Le plateau est mélangé pour chacun. Tous les joueurs ont les mêmes 23 objets ; vos cartes secrètes peuvent parfois être identiques.</div><p class="rules-save">Tu fais une pause ? « Continuer » reprend ta partie sur ce même iPad et dans ce même navigateur.</p><button class="button button-primary full-width" data-action="close">J’ai compris ${icon("check")}</button>`,
+    `<span class="dialog-kicker">À DEUX, C’EST MIEUX</span><h2 id="dialog-title">Comment jouer ?</h2><p class="dialog-intro">Installe-toi face à ton partenaire. Chacun ouvre le jeu sur son iPad et lance une nouvelle partie.</p><ol class="rules-list"><li><span>01</span><div><h3>Découvre ta carte secrète</h3><p>Un objet est tiré au hasard pour toi. Regarde-le, puis cache-le : ton partenaire doit le deviner.</p></div></li><li><span>02</span><div><h3>Pose une question en français</h3><p>À tour de rôle, posez une question sur l’objet de l’autre : « C’est bleu ? », « C’est un meuble ? ». Répondez seulement par « oui » ou « non ».</p></div></li><li><span>03</span><div><h3>Élimine les objets</h3><p>Sur ton plateau, touche les objets qui ne correspondent pas à la réponse. Une erreur ? Touche encore la carte pour la rétablir.</p></div></li><li><span>04</span><div><h3>Trouve l’objet secret</h3><p>Il ne reste qu’une carte ? Demande à ton partenaire : « C’est le vélo ? » — et « Ce sont les ciseaux ? » quand l’objet est au pluriel.</p></div></li></ol><div class="dialog-note">${icon("cards")} Le plateau est mélangé pour chacun. Tous les joueurs ont les mêmes 23 objets ; vos cartes secrètes peuvent parfois être identiques.</div><p class="rules-save">Tu fais une pause ? « Continuer » reprend ta partie sur ce même iPad et dans ce même navigateur.</p><button class="button button-primary full-width" data-action="close">J’ai compris ${icon("check")}</button>`,
     "rules-dialog",
   );
 }
 
 function showQuestions() {
   openDialog(
-    `<span class="dialog-kicker">UN COUP DE POUCE</span><h2 id="dialog-title">À toi de poser la question.</h2><p class="dialog-intro">Choisis une question qui t’aide à éliminer plusieurs objets.</p><div class="question-groups"><section><h3>${icon("cards")} L’utilisation</h3><p>Est-ce qu’on l’utilise en classe ?</p><p>Est-ce que c’est pour écrire ?</p><p>Est-ce que c’est pour faire du sport ?</p><p>Est-ce qu’on peut le porter ?</p></section><section><h3>${icon("eye")} L’apparence</h3><p>Est-ce que ça roule ?</p><p>Est-ce qu’il y a du bleu ?</p><p>Est-ce que c’est en bois ?</p><p>Est-ce que ça tient dans une trousse ?</p></section><section><h3>${icon("spark")} La catégorie</h3><p>Est-ce que c’est électronique ?</p><p>Est-ce que c’est un meuble ?</p></section></div><div class="dialog-note">${icon("chat")} Pour répondre : « Oui ! » ou « Non ! »</div><button class="button button-primary full-width" data-action="close">À moi de jouer ${icon("arrow")}</button>`,
-  );
-}
-
-function showGuess() {
-  const candidates = game.board.filter((id) => !game.eliminated.includes(id));
-  if (candidates.length === 1) return confirmGuess(candidates[0]);
-  openDialog(
-    `<span class="dialog-kicker">LE MOMENT DE VÉRITÉ</span><h2 id="dialog-title">Tu as une petite idée ?</h2><p class="dialog-intro">Choisis l’objet que tu penses avoir deviné, puis demande à ton partenaire.</p><div class="guess-grid">${candidates.map((id) => `<button class="guess-option" data-guess="${id}">${artwork(ITEM_BY_ID[id])}<span>${ITEM_BY_ID[id].name}</span></button>`).join("")}</div>`,
-    "guess-dialog",
-  );
-}
-
-function confirmGuess(id) {
-  const item = ITEM_BY_ID[id];
-  openDialog(
-    `<span class="dialog-kicker">DEMANDE À TON PARTENAIRE</span><h2 id="dialog-title" class="guess-question">« ${questionFor(item)} »</h2><div class="chosen-object">${artwork(item)}<strong>${item.name}</strong></div><p class="dialog-intro centered">Que répond ton partenaire ?</p><div class="dialog-actions"><button class="button button-secondary" data-action="wrong">Non, pas encore</button><button class="button button-primary" data-action="win">Oui, c’est ça ! ${icon("spark")}</button></div>`,
-  );
-}
-
-function celebrate() {
-  openDialog(
-    `<div class="celebration" aria-hidden="true">${Array.from({ length: 12 }, (_, i) => `<i style="--i:${i}"></i>`).join("")}<span>✳</span></div><span class="dialog-kicker">BIEN JOUÉ !</span><h2 id="dialog-title">Mystère résolu.</h2><p class="dialog-intro">Bravo, tu as trouvé l’objet de ton partenaire !<br />Et si vous échangiez les rôles ?</p><button class="button button-primary full-width" data-action="start">Encore une partie ${icon("arrow")}</button><button class="text-button celebration-return" data-action="close">Revenir à mon plateau</button>`,
-    "win-dialog",
+    `<span class="dialog-kicker">UN COUP DE POUCE</span><h2 id="dialog-title">À toi de poser la question.</h2><p class="dialog-intro">Commence par <strong>« C’est… ? »</strong>, et par <strong>« Ce sont… ? »</strong> quand l’objet est au pluriel.</p><div class="question-groups"><section><h3>${icon("eye")} L’apparence</h3><p>C’est bleu ?</p><p>C’est grand ?</p><p>C’est petit ?</p><p>C’est en bois ?</p></section><section><h3>${icon("cards")} La catégorie</h3><p>C’est une fourniture scolaire ?</p><p>C’est un meuble ?</p><p>C’est électronique ?</p><p>C’est pour faire du sport ?</p></section><section><h3>${icon("spark")} Au pluriel</h3><p>Ce sont des ciseaux ?</p><p>Ce sont des crayons ?</p><p>Ce sont des lunettes ?</p></section></div><div class="dialog-note">${icon("chat")} Pour répondre : « Oui ! » ou « Non ! »</div><button class="button button-primary full-width" data-action="close">À moi de jouer ${icon("arrow")}</button>`,
   );
 }
 
@@ -322,8 +290,6 @@ document.addEventListener("click", (event) => {
     announcer.textContent = `${ITEM_BY_ID[object.dataset.object].name} : ${game.eliminated.includes(object.dataset.object) ? "éliminé" : "rétabli"}.`;
     return;
   }
-  const guess = event.target.closest("[data-guess]");
-  if (guess) return confirmGuess(guess.dataset.guess);
   const button = event.target.closest("[data-action]");
   if (!button || button.disabled) return;
   switch (button.dataset.action) {
@@ -378,16 +344,6 @@ document.addEventListener("click", (event) => {
       updateBoard();
       closeDialog();
       toast("Tous les objets sont rétablis. Ton secret est toujours le même.");
-      break;
-    case "guess":
-      showGuess();
-      break;
-    case "wrong":
-      closeDialog();
-      toast("L’enquête continue ! Pose une autre question à ton partenaire.");
-      break;
-    case "win":
-      celebrate();
       break;
   }
 });

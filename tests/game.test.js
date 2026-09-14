@@ -115,10 +115,10 @@ test("blocked browser storage leaves the game playable", () => {
 test("French guess questions agree with singular and plural object names", () => {
   assert.equal(
     questionFor(ITEMS.find(({ id }) => id === "ciseaux")),
-    "Est-ce que ce sont les ciseaux ?",
+    "Ce sont les ciseaux ?",
   );
   assert.equal(
     questionFor(ITEMS.find(({ id }) => id === "ordinateur")),
-    "Est-ce que c’est l’ordinateur ?",
+    "C’est l’ordinateur ?",
   );
 });

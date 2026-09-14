@@ -85,9 +85,6 @@ test("all eliminated cards can be restored and reset can be undone", async ({
   for (const card of await page.locator("[data-object]").all())
     await card.click();
   await expect(page.locator("#remaining")).toHaveText("0 / 23");
-  await expect(
-    page.getByRole("button", { name: "J’ai une idée !" }),
-  ).toBeDisabled();
   await expect(page.locator("#board-message")).toContainText("Plus d’objets");
   await page.getByRole("button", { name: "Rétablir tous les objets" }).click();
   await page.getByRole("button", { name: "Tout rétablir" }).click();
@@ -96,29 +93,23 @@ test("all eliminated cards can be restored and reset can be undone", async ({
   await expect(page.locator("#remaining")).toHaveText("0 / 23");
 });
 
-test("guesses ask the real partner to confirm and offer another round", async ({
+test("the last object left is named in a « C’est… ? » question", async ({
   page,
 }) => {
   await page.goto("/");
   await page
     .getByRole("button", { name: "Nouvelle partie", exact: true })
     .click();
-  await page.getByRole("button", { name: "J’ai une idée !" }).click();
-  await page.locator('[data-guess="ciseaux"]').click();
-  await expect(
-    page.getByRole("heading", { name: "« Est-ce que ce sont les ciseaux ? »" }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Non, pas encore" }).click();
-  await expect(page.locator("#dialog")).not.toBeVisible();
-  await page.getByRole("button", { name: "J’ai une idée !" }).click();
-  await page.locator('[data-guess="ballon"]').click();
-  await page.getByRole("button", { name: "Oui, c’est ça !" }).click();
-  await expect(
-    page.getByRole("heading", { name: "Mystère résolu." }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Encore une partie" }).click();
-  await expect(page.locator("#dialog")).not.toBeVisible();
-  await expect(page.locator("#remaining")).toHaveText("23 / 23");
+  for (const card of await page
+    .locator('[data-object]:not([data-object="ciseaux"])')
+    .all())
+    await card.click();
+  await expect(page.locator("#remaining")).toHaveText("1 / 23");
+  await expect(page.locator("#board-message")).toContainText(
+    "« Ce sont les ciseaux ? »",
+  );
+  await page.locator('[data-object="velo"]').click();
+  await expect(page.locator("#board-message")).toContainText("C’est… ?");
 });
 
 test("the secret hides automatically, on app switching and when opening rules", async ({
